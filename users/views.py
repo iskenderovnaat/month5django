@@ -8,6 +8,7 @@ from rest_framework.authtoken.models import Token
 from .models import ConfirmationCode
 
 
+
 @api_view(['POST'])
 def confirm_user_api_view(request):
     username = request.data.get('username')
@@ -24,7 +25,7 @@ def confirm_user_api_view(request):
     if confirmation.code == code:
         user.is_active = True
         user.save()
-        print(f"User {user.username} is_active: {user.is_active}")
+        print(f"User {user.username} is_active: {user.is_active}")  # Лог для проверки
         confirmation.delete()
         return Response({'message': 'User confirmed successfully'}, status=status.HTTP_200_OK)
     else:
@@ -33,8 +34,8 @@ def confirm_user_api_view(request):
 
 @api_view(['POST'])
 def authorization_api_view(request):
-    username = request.data.get('username')
-    password = request.data.get('password')
+    username = request.data.get('username')  # admin
+    password = request.data.get('password')  # 123
 
     user = authenticate(username=username, password=password)
     if user:
